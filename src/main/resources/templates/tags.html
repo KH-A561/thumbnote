@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thumbnote</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--</style>-->
+    <link rel="stylesheet" href="/templates/simple-sidebar.css">
+    <script src="https://kit.fontawesome.com/865201df3b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:insert="fragments/general.html :: sidebar-tags"></div>
+
+    <div th:insert="fragments/general.html :: sidebar-notes"></div>
+
+    <!-- Page Content -->
+    <!--<div class="container-fluid" id="page-content-wrapper">-->
+    <div class="container-fluid">
+        <div th:insert="fragments/general.html :: navbar"></div>
+        <div th:if="${currentNote} != null">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="d-flex justify-content-start pt-4 pl-4 pr-2 pb-2 align-items-center">
+                        <h1 class="" th:text="${currentNote.name}"></h1>
+                        <a th:href="@{'/notebook/{notebookId}/note/{id}/edit'(notebook=${notebook.id},id=${currentNote.id})}" role="button" type="submit">
+                            <i class="far fa-edit fa-2x pl-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 align-items-end">
+                    <p class="text-muted text-right pt-6 " th:text="${currentNote.creationTime}"></p>
+                </div>
+            </div>
+
+            <div class="row ml-4">
+                <a href="#" class="badge badge-primary h4 mr-1" th:each="tag : ${currentNote.tags}" th:text="${tag}"></a>
+            </div>
+            <p class="pl-4 pt-2 pr-4" th:each="paragraph : ${currentNote.text}" th:text="${paragraph}"></p>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+
+<!--<div class="d-flex" id="wrapper">-->
+
+<!--<div class="container my-3">-->
+<!--<div class="bg-light border-right" id="sidebar-wrapper">-->
+<!--<div class="container">-->
+<!--<div class="sidebar-heading">Start Bootstrap </div>-->
+
+<!--<div class="d-flex justify-content-between pb-1">-->
+<!--<div class="input-group">-->
+<!--<div class="input-group-append">-->
+<!--<button class="btn" type="button">-->
+<!--<i class="fas fa-search fa-sm"></i>-->
+<!--</button>-->
+<!--</div>-->
+<!--<input type="text" class="form-control bg-light border-0 rounded small"-->
+<!--placeholder="All notes..." aria-label="Search" aria-describedby="basic-addon2">-->
+<!--<div class="input-group-append">-->
+<!--<button class="btn" type="button">-->
+<!--<i class="fas fa-search fa-sm"></i>-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="text-center">-->
+<!--<a href="note" x-placement="middle">-->
+<!--lll Note-->
+<!--</a>-->
+<!--</div>-->
+<!--<ul class="list-group list-group-flush bg-light text-dark" id="list-tab" role="tablist">-->
+<!--<a class="list-group-item list-group-item-action flex-column align-items-start active"-->
+<!--id="list-home-list" data-toggle="list" href="#note-1" role="tab" aria-controls="note-1">-->
+<!--<div class="d-flex justify-content-between">-->
+<!--<h5>This was my first note</h5>-->
+<!--<small>3 days ago</small>-->
+<!--</div>-->
+<!--<p>I wrote some text here that I did not want to forget.</p>-->
+<!--<div class="d-inline-flex p-2 small">#Hello-World #Tag2 #Tag3</div>-->
+<!--</a>-->
+
+<!--<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">-->
+<!--<div class="d-flex justify-content-between">-->
+<!--<h5>Second note</h5>-->
+<!--<small>3 days ago</small>-->
+<!--</div>-->
+<!--<p>I wrote some text here that I did not want to forget.</p>-->
+<!--<div class="d-inline-flex p-2 small">#Tag 3</div>-->
+<!--</a>-->
+
+<!--<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">-->
+<!--<div class="d-flex justify-content-between">-->
+<!--<h5>Third note</h5>-->
+<!--<small>3 days ago</small>-->
+<!--</div>-->
+<!--<p>I wrote some text here that I did not want to forget.</p>-->
+<!--<div class="d-inline-flex p-2 small">#Tag 5 #Tag 6</div>-->
+<!--</a>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div id="page-content-wrapper">-->
+<!--<div class="container bg-light text-dark border">-->
+<!--<div class="tab-content pt-3" id="nav-tabContent">-->
+<!--<div class="tab-pane fade show active h2" id="list-note1" role="tabpanel"-->
+<!--aria-labelledby="list-note1-list">This was my first note-->
+<!--</div>-->
+<!--<div class="tab-pane fade show active h5 my=5" id="list-note12" role="tabpanel"-->
+<!--aria-labelledby="list-note1-list">I wrote some text here that I did not want to forget. <br>-->
+<!--<br> It was something like this: <br> Velit aute mollit ipsum ad dolor consectetur nulla officia-->
+<!--culpa adipisicing exercitation fugiat tempor. Voluptate deserunt sit sunt nisi aliqua-->
+<!--fugiat proident ea ut. Mollit voluptate reprehenderit occaecat nisi ad non minim tempor sunt-->
+<!--voluptate consectetur exercitation id ut nulla. Ea et fugiat aliquip nostrud sunt incididunt-->
+<!--consectetur culpa aliquip eiusmod dolor. Anim ad Lorem-->
+<!--aliqua in cupidatat nisi enim eu nostrud do aliquip veniam minim.-->
+<!--</div>-->
+<!--<div class="tab-pane fade" id="list-note2" role="tabpanel" aria-labelledby="list-note2-list">...-->
+<!--</div>-->
+<!--<div class="tab-pane fade" id="list-note3" role="tabpanel" aria-labelledby="list-note3-list">...-->
+<!--</div>-->
+<!--<div class="tab-pane fade" id="list-note4" role="tabpanel" aria-labelledby="list-note4-list">...-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</html>

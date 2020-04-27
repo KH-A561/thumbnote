@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="alexander" id="addColumn-notebook-description">
+        <addColumn catalogName="thumbnote"
+                   schemaName="public"
+                   tableName="notebook">
+            <column name="description" type="text"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="alexander" id="addColumn-notebook-modificationtime">
+        <addColumn catalogName="thumbnote"
+                   schemaName="public"
+                   tableName="notebook">
+            <column name="modification_time" type="timestamp without timezone"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="renameColumn-notebook-name" author="alexander">
+        <renameColumn catalogName="thumbnote"
+                      columnDataType="varchar(50)"
+                      newColumnName="title"
+                      oldColumnName="name"
+                      remarks="name"
+                      schemaName="public"
+                      tableName="notebook"/>
+    </changeSet>
+</databaseChangeLog>

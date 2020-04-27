@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <include file="changes/initdatabase.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-date-type-migration.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-not-null-removal.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-add-unique-constraint.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-note-add-update-time-column.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-password-type-migration.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-remove-unique-constraint.xml" relativeToChangelogFile="true"/>
+    <include file="changes/changelog-modify-notebook.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

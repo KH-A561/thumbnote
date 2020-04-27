@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+
+    <title>Add New Note</title>
+
+    <link href="../static/css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/865201df3b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+
+    <div th:insert="fragments/general.html :: sidebar-notes"></div>
+
+    <div class="container" style="width: 100%; padding-right: 0px; padding-left: 0px; margin-right: 0; margin-left: 0;">
+        <div th:insert="fragments/general.html :: navbar"></div>
+
+        <!--<div class="container-fluid">-->
+            <form th:action="@{'/notebook/{notebookId}/note/create'(notebookId=${notebook.id})}"
+                  th:object="${noteInputForm}" method="POST"
+                  class="pt-4 pl-4 pr-4">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" th:field="*{name}" type="text" placeholder="Note Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" th:field="*{tags}" type="text" placeholder="Note Tags">
+                </div>
+
+                <!--<div id="editor-container" th:field="*{text}">-->
+                <!--</div>-->
+
+                <div class="form-group">
+                <textarea class="form-control" th:field="*{text}" rows="20"
+                      placeholder="Dear Note, today I wanted to tell you about..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Save Note</button>
+            </form>
+        <!--</div>-->
+    </div>
+</div>
+</body>
+</html>

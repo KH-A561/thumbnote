@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="alexander" id="removeUniqueConstraint-note-name">
+        <dropUniqueConstraint catalogName="thumbnote"
+                              constraintName="note_name_unique"
+                              tableName="note"
+                              uniqueColumns="name"
+        />
+    </changeSet>
+
+    <changeSet author="alexander" id="removeUniqueConstraint-tag-name">
+        <dropUniqueConstraint catalogName="thumbnote"
+                              constraintName="tag_name_unique"
+                              tableName="tag"
+                              uniqueColumns="name"
+        />
+    </changeSet>
+
+
+    <changeSet author="alexander" id="removeUniqueConstraint-notebook-name">
+        <dropUniqueConstraint catalogName="thumbnote"
+                              constraintName="notebook_name_unique"
+                              tableName="notebook"
+                              uniqueColumns="name"
+        />
+    </changeSet>
+</databaseChangeLog>

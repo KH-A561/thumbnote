@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thumbnote</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--</style>-->
+    <link rel="stylesheet" href="../static/css/signin.css">
+    <script src="https://kit.fontawesome.com/865201df3b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="d-flex" id="wrapper" style="overflow-x: hidden">
+
+    <!-- Sidebar -->
+    <div th:insert="fragments/general.html :: sidebar-notes"></div>
+
+    <!-- Page Content -->
+    <div class="container" style="width: 100%; padding-right: 0px; padding-left: 0px; margin-right: 0; margin-left: 0;">
+        <div th:insert="fragments/general.html :: navbar"></div>
+        <div th:if="${currentNote} != null">
+            <div class="row">
+                    <div class="d-flex justify-content-start mt-4 ml-4 mr-2 mb-2 align-items-center">
+                        <h1 class="ml-3" th:text="${currentNote.name}"></h1>
+                        <a th:href="@{'/notebook/{notebookId}/note/{id}/edit'(notebookId=${notebook.id},id=${currentNote.id})}" role="button" type="submit">
+                            <i class="far fa-edit fa-2x pl-2"></i>
+                        </a>
+                        <p class="text-muted ml-2" th:text="${currentNote.creationTime}"></p>
+                    </div>
+            </div>
+
+            <div class="row ml-4">
+                <a href="#" class="badge badge-primary h4 mr-1" th:each="tag : ${currentNote.tags}"
+                   th:text="${tag}"></a>
+            </div>
+            <p class="ml-4 mt-2 mr-4" th:each="paragraph : ${currentNote.text}" th:text="${paragraph}"></p>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</html>

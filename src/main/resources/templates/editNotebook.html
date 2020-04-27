@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Thumbnote</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--</style>-->
+    <script src="https://kit.fontawesome.com/865201df3b.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" />
+</head>
+<body>
+<div class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <a class="navbar-brand font-menu-button" href="#">
+        <div class="row ml-auto">
+            <img src="../static/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            <h4 class="font-weight-light" style="font-family: Helvetica; color: #1d2124">Thumbnote</h4>
+        </div>
+    </a>
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${account.name}">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/account/logout">Log Out</a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="container">
+    <div class="mt-md-4 mb-md-4 mx-auto justify-content-between row">
+        <h1 style="color: #1d2124">Edit Notebook</h1>
+    </div>
+    <form method="post" th:action="@{'/notebook/{notebookId}/edit'(notebookId=${notebook.id})}" th:object="${editNotebookInputForm}">
+        <div class="form-group">
+            <label class="h4" for="inputTitle">Title</label>
+            <input th:attr="value = *{title}" th:field="*{title}" type="text" class="form-control" id="inputTitle" aria-describedby="titleHelp">
+            <small id="titleHelp" class="form-text text-muted">Give it a proper name</small>
+        </div>
+        <div class="form-group">
+            <label class="h4" for="descriptionTextarea">Description</label>
+            <textarea th:attr="value = *{description}" th:field="*{description}" class="form-control" id="descriptionTextarea" rows="3" aria-describedby="descriptionHelp"></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Describe your new notebook's contents</small>
+        </div>
+        <div class="form-group">
+            <label class="h4" for="formSelectNotes">Notes</label>
+            <select th:attr="value = *{noteNames}" th:field="*{noteNames}" multiple class="form-control multiselect-container" id="formSelectNotes" name="noteNames[]" aria-describedby="notesHelp">
+                <option th:each="note : ${notes}" th:value="${note.name}" th:text="${note.name}"></option>
+            </select>
+            <small id="notesHelp" class="form-text text-muted">Select notes to include into new notebook</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary" th:href="@{/account/notebooks}">Cancel</a>
+    </form>
+
+    <script>
+        $(document).ready(function(){
+            $('#formSelectNotes').multiselect({
+                nonSelectedText: 'Select Notes',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight:'200px',
+                buttonWidth:'1100px',
+                templates: {
+                    filterClearBtn: '<span class="input-group-btn">\n' +
+                        '                <button class="btn btn-primary multiselect-clear-filter" type="button"><i class="fas fa-eraser"></i></button>\n' +
+                        '            </span>\n',
+                    ul: '<ul class="multiselect-container dropdown-menu" style="width: 1100px">\n' +
+                        '</ul>'
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

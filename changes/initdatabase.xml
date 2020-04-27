@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="1" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="account"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="account">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="note"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="note">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_note_account" references="account (id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="notebook"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="notebook">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_notebook_account" references="account (id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="notebook_notes"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="notebook_notes">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="notebook_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_notebook_notes_notebook" references="notebook (id)"/>
+            </column>
+            <column name="note_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_notebook_notes_note" references="note (id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tag"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tag">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_tag_account" references="account (id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="alexander">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="note_tags"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="note_tags">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="note_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_note_tags_note" references="note (id)"/>
+            </column>
+            <column name="tag_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_note_tags_tag" references="tag (id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "elasticSearch.transportAddress",
+      "type": "java.lang.String",
+      "description": "Description for elasticSearch.transportAddress."
+  }
+] }

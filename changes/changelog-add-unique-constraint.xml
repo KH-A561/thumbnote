@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="alexander" id="addUniqueConstraint-account-login">
+        <addUniqueConstraint catalogName="thumbnote"
+                             columnNames="login"
+                             constraintName="account_login_unique"
+                             tableName="account"
+                             />
+    </changeSet>
+    <changeSet author="alexander" id="addUniqueConstraint-account-email">
+        <addUniqueConstraint catalogName="thumbnote"
+                             columnNames="email"
+                             constraintName="account_email_unique"
+                             tableName="account"
+        />
+    </changeSet>
+
+    <changeSet author="alexander" id="addUniqueConstraint-note-name">
+        <addUniqueConstraint catalogName="thumbnote"
+                             columnNames="name"
+                             constraintName="note_name_unique"
+                             tableName="note"
+        />
+    </changeSet>
+
+    <changeSet author="alexander" id="addUniqueConstraint-tag-name">
+        <addUniqueConstraint catalogName="thumbnote"
+                             columnNames="name"
+                             constraintName="tag_name_unique"
+                             tableName="tag"
+        />
+    </changeSet>
+
+
+    <changeSet author="alexander" id="addUniqueConstraint-notebook-name">
+        <addUniqueConstraint catalogName="thumbnote"
+                             columnNames="name"
+                             constraintName="notebook_name_unique"
+                             tableName="notebook"
+        />
+    </changeSet>
+</databaseChangeLog>

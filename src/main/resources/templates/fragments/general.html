@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thumbnote</title>
+</head>
+<body>
+<div th:fragment="sidebar-notes">
+    <aside class="bg-light border-right">
+        <div class="sidebar-heading text-center">
+            <h1>Thumbnote</h1></div>
+        <hr class="sidebar-divider my-0"/>
+
+        <div class="d-flex justify-content-between">
+            <div class="input-group pl-4">
+                <h3><i class="fas fa-sticky-note"></i> Notes</h3>
+            </div>
+
+            <a class="btn btn-outline-primary"
+               th:href="@{'/notebook/{notebookId}/note/create' (notebookId=${notebook.id})}" role="button">
+                <i class="fas fa-feather"></i>
+            </a>
+        </div>
+        <hr class="sidebar-divider my-0"/>
+
+        <form th:method="GET" th:action="@{'/notebook/{notebookId}/note/find?by='(notebookId=${notebook.id})}"
+              th:object="${searchInputForm}">
+            <div class="input-group justify-content-between">
+                <input type="text" class="form-control border-1 rounded small" th:field="*{searchInput}"
+                       th:attr="${searchInputForm.searchInput} ?: placeholder = *{searchInput}"
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="btn-group">
+                    <select class="custom-select bg-light" id="inputGroupSelect04" aria-label="Select" name="by">
+                        <option value="name">by name</option>
+                        <option value="tags">by tags</option>
+                        <option value="text">by text</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div style="max-height: 85vh; min-width: 200px; overflow-y:auto;">
+            <div class="list-group list-group-flush bg-light text-dark" th:each="note : ${notes}">
+                <a href="#" class="list-group-item list-group-item-action align-items-start"
+                   th:href="@{'/notebook/{notebookId}/note/{id}' (notebookId=${notebook.id},id=${note.id})}">
+
+                    <div class="card border-primary" style="width: 28rem;">
+                        <div class="card-header">
+                            <div class="row justify-content-between">
+                                <small class="text-muted pl-2" th:text="${note.creationTime}"/>
+
+                                <div class="col-sm">
+                                    <form th:action="@{'/notebook/{notebookId}/note/{id}'(notebookId=${notebook.id}, id=${note.id})}"
+                                          th:object="${note}"
+                                          th:method="DELETE">
+                                        <button type="submit" class="close" aria-label="Close">
+                                            <span aria-hidden="true" th:field="${note}">&times;</span>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-primary" th:text="${note.name}">
+                            </h5>
+                            <p class="card-text" th:text="${note.getTextAsString()}"
+                               style="max-height: 100px; overflow: hidden"></p>
+                        </div>
+                        <div class="card-footer">
+                        <span class="badge badge-secondary mr-1" th:each="tag : ${note.tags}"
+                              th:text="${tag}"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </aside>
+    <!-- /#sidebar-wrapper -->
+</div>
+
+
+<div th:fragment="sidebar-tags">
+    <div class="bg-light border-right">
+        <div class="sidebar-heading text-center"><h1>Thumbnote</h1></div>
+        <hr class="sidebar-divider my-0"/>
+
+        <div class="d-flex justify-content-between pb-1">
+            <div class="input-group">
+                <h3 class="ml-3"><i class="fas fa-tags"></i> Tags</h3>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="#{/account/notes}">Notes</a>
+                    <a class="dropdown-item" href="#">Notebooks</a>
+                </div>
+            </div>
+        </div>
+        <hr class="sidebar-divider my-0"/>
+
+        <form th:method="GET" th:action="@{'/tag/find'}" th:object="${searchInputForm}">
+            <div class="input-group justify-content-between">
+                <input type="text" class="form-control border-1 rounded small" th:field="*{searchInput}"
+                       th:attr="${searchInputForm.searchInput} ?: placeholder = *{searchInput}"
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="list-group list-group-flush bg-light text-dark" th:each="tag : ${tags}">
+            <a class="list-group-item list-group-item-action flex-column align-items-start"
+               th:href="@{'/tag/{id}' (id=${tag.id})}">
+                <div class="d-flex justify-content-between">
+                    <p th:text="${tag.name}"/>
+                    <span class="badge badge-primary" th:text="${tag.noteCount}"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+</div>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="navbar-nav container">
+            <ol class="breadcrumb mt-3">
+                <li class="breadcrumb-item d-flex">
+                    <a th:href="@{/account/notebooks}">
+                        <i class="fas fa-book"></i>
+                        Notebooks
+                    </a>
+                </li>
+                <li class="breadcrumb-item d-flex">
+                    <a th:href="@{'/notebook/{notebookId}/edit' (notebookId=${notebook.id})}">
+                        <div th:text="${notebook.title}"></div>
+                    </a>
+                </li>
+                <li class="breadcrumb-item d-flex dropdown" th:if="${currentNote} != null">
+                    <a class="nav-link dropdown-toggle d-flex" href="#" id="breadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${currentNote.name}">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="breadDropdown">
+                        <a th:each="ntbk : ${notebooks}" th:if="${ntbk.id} != ${notebookId}"  class="dropdown-item">
+                            <form th:action="@{'/notebook/{notebookId}/note/{id}/move?to={toNotebookId}'
+                    (notebookId=${notebook.id}, id=${currentNote.id}, toNotebookId=${ntbk.id})}" method="POST">
+                                <button class="btn" th:text="'Move to ' + ${ntbk.title}" type="submit"></button>
+                            </form>
+                        </a>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+
+        <form class="form-inline my-2 my-lg-0">
+            <div class="nav-item navbar-light dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${account.name}">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/account/logout">Log Out</a>
+                </div>
+            </div>
+        </form>
+    </nav>
+</div>
+</body>
+</html>

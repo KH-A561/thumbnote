@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+
+    <title>Add New Note</title>
+
+    <link href="../static/css/style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/865201df3b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+
+    <div th:insert="fragments/general.html :: sidebar-notes"></div>
+
+    <div class="container" style="width: 100%; padding-right: 0px; padding-left: 0px; margin-right: 0; margin-left: 0;">
+        <div th:insert="fragments/general.html :: navbar"></div>
+
+        <!--<div class="container-fluid">-->
+        <form th:action="@{'/notebook/{notebookId}/note/{id}/edit'(notebookId=${notebook.id}, id=${currentNote.id})}"
+              th:object="${currentNote}" th:method="PUT"
+              class="pt-4 pl-4 pr-4">
+            <div class="form-group">
+                <input class="form-control form-control-lg"
+                       th:field="*{name}"
+                       th:attr="value = *{name}"
+                       type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg"
+                       th:field="*{tags}" type="text"
+                       th:attr="value = *{tags}">
+            </div>
+            <div class="form-group">
+            <textarea class="form-control"
+                      th:field="*{text}" rows="20"
+                      th:attr="value = *{text}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Edit Note</button>
+        </form>
+        <!--</div>-->
+    </div>
+</div>
+</body>
+</html>
